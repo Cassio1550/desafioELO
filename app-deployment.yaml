@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: cassio1550/graalvm-ce:latest  # Repositório Docker corrigido
+          image: springci/graalvm-ce:latest  # Repositório Docker corrigido
           imagePullPolicy: Always
           env:
             - name: SPRING_DATASOURCE_URL
