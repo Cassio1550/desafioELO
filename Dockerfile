@@ -1,11 +1,11 @@
 # Builder
-FROM ghcr.io/springci/graalvm-ce:22.2.0 AS builder
+FROM ghcr.io/openlegacy/graalvm-ce:latest AS builder
 COPY . /root/app/
 WORKDIR /root/app
 RUN ./mvnw clean install -DskipTests
 
 # Application
-FROM ghcr.io/springci/graalvm-ce:22.2.0 AS application
+FROM ghcr.io/openlegacy/graalvm-ce:latest AS application
 COPY --from=builder /root/app/target/*.jar /home/app/app.jar
 WORKDIR /home/app
 RUN chmod +x /home/app/app.jar
