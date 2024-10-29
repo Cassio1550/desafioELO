@@ -16,7 +16,7 @@ spec:
         - name: myregistrykey # Adicione esta linha se necessário
       containers:
         - name: app
-          image: paketobuildpacks/graalvm:latest  # Verifique se essa imagem está correta
+          image: chainguard/graalvm-native # Verifique se essa imagem está correta
           imagePullPolicy: IfNotPresent           
           command: ["java", "-jar", "app.jar"]    
           env:
