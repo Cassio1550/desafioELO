@@ -1,16 +1,13 @@
-# Etapa de Builder
-FROM maven:3.8.6-openjdk-11 AS builder 
+# Builder
+FROM graalvm/graalvm-ce:22.2.0 AS builder
+COPY  . /root/app/
 WORKDIR /root/app
-COPY . .
+RUN ./mvnw clean install -DskipTests
 
-# Compilação e empacotamento do projeto
-RUN mvn clean install -DskipTests
-
-# Etapa de Application
-FROM openjdk:11-jre-slim AS application
-COPY --from=builder /root/app/target/*.jar /home/app/app.jar
+# Application
+FROM graalvm/graalvm-ce:22.2.0 AS application
+COPY --from=builder /root/app/target/*.jar /home/app/
 WORKDIR /home/app
+RUN chmod 0777 /home/app
 EXPOSE 8080
-
-# Comando para rodar a aplicação
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT java -jar $JAVA_OPTIONS *.jar 
