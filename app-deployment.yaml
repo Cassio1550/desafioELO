@@ -12,11 +12,13 @@ spec:
       labels:
         app: sre-challenge-app
     spec:
+      imagePullSecrets:
+        - name: myregistrykey # Adicione esta linha se necessário
       containers:
         - name: app
-          image: paketobuildpacks/graalvm:latest  # Repositório Docker correto
-          imagePullPolicy: IfNotPresent           # Reduz consumo de rede
-          command: ["java", "-jar", "app.jar"]    # Adicione o nome correto do JAR
+          image: paketobuildpacks/graalvm:latest  # Verifique se essa imagem está correta
+          imagePullPolicy: IfNotPresent           
+          command: ["java", "-jar", "app.jar"]    
           env:
             - name: SPRING_DATASOURCE_URL
               value: jdbc:mysql://mysql-service:3306/database
@@ -47,7 +49,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 8080                # Ajusta para a porta correta
+    - port: 8080
       targetPort: 8080
   selector:
     app: sre-challenge-app
