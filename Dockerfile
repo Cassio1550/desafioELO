@@ -1,11 +1,11 @@
 # Builder
-FROM alokkusingh/graalvm-ce:latest AS builder
+FROM chainguard/graalvm-native:latest AS builder
 COPY  . /root/app/
 WORKDIR /root/app
 RUN ./mvnw clean install -DskipTests
 
 # Application
-FROM alokkusingh/graalvm-ce:latest AS application
+FROM chainguard/graalvm-native:latest AS application
 COPY --from=builder /root/app/target/*.jar /home/app/
 WORKDIR /home/app
 RUN chmod 0777 /home/app
